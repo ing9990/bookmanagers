@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Martin
  * @since 2021/03/31
@@ -48,6 +50,28 @@ public class BookRepositoryTest {
         System.out.println("Publisher : " + user.getReviews().get(0).getBook().getPublisher());
     }
 
+    @Transactional
+    @Test
+    void bookCascadeTest(){
+        Book book = new Book();
+        book.setName("데미안");
+
+        Publisher publisher = new Publisher();
+        publisher.setName("헤르만 헤세");
+
+        bookRepository.save(book);
+        publisherRepository.save(publisher);
+
+        book.setPublisher(publisher);
+        bookRepository.save(book);
+
+        publisher.addBook(book);
+        publisherRepository.save(publisher);
+
+        System.out.println("books: "+ bookRepository.findAll());
+        System.out.println("publicshers: " + publisherRepository.findAll());
+    }
+
     private void givenBookAndReview() {
         givenReview(givenUser(), givenBook(givenPublisher()));
     }
@@ -81,4 +105,15 @@ public class BookRepositoryTest {
 
         return publisherRepository.save(publisher);
     }
+
+    @Test
+    void queryTest(){
+        System.out.println("findByNameRecently: "+
+                bookRepository.
+                        findByNameRecently(
+                                "데미안",
+                                LocalDateTime.now().minusDays(1L)
+                                        ,LocalDateTime.now().minusDays(1L)));
+    }
+
 }

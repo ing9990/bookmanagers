@@ -136,8 +136,6 @@ class UserRepositoryTest {
         User user = new User();
         user.setEmail("martin2@fastcampus.com");
         user.setName("martin");
-//        user.setCreatedAt(LocalDateTime.now());
-//        user.setUpdatedAt(LocalDateTime.now());
 
         userRepository.save(user);
 

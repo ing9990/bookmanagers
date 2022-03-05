@@ -5,12 +5,14 @@ import com.fastcampus.jpa.bookmanager.domain.BookReviewInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Martin
  * @since 2021/04/21
  */
 @SpringBootTest
+@Transactional
 class BookReviewInfoRepositoryTest {
     @Autowired
     private BookReviewInfoRepository bookReviewInfoRepository;
